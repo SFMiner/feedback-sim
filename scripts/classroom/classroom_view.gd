@@ -23,6 +23,7 @@ const HAIR_STYLES: int = 8
 const TEACHER_X: float = 58.0
 const FLOOR_Y: float = 152.0
 const DOOR_X: float = 640.0
+const TEACHER2_HAIR: Color = Color("3fd6b4")
 const VOICE_COLORS: Array[Color] = [Color("ffd166"), Color("ef8354"), Color("06d6a0"), Color("9bd1ff")]
 
 # === PUBLIC VARIABLES ===
@@ -69,10 +70,12 @@ func generate_looks(rng_seed: int) -> void:
 	_looks.clear()
 	for i: int in range(ClassroomModel.COUNT):
 		_looks.append(_random_look(rng))
+	# The two teachers are fixed characters (owner's brief); only their shirts come from the seed.
 	_teacher_look = _random_look(rng)
 	_teacher2_look = _random_look(rng)
-	_teacher_look["h"] = 1.0
-	_teacher2_look["h"] = 1.0
+	_teacher_look.merge({"hair": Color("15110f"), "style": 0, "w": 0.72, "h": 1.06, "glasses": true}, true)
+	_teacher2_look.merge({"skin": Color("f4d7bd"), "hair": TEACHER2_HAIR, "style": 0, "w": 1.5, "h": 0.93,
+		"glasses": true, "beard": true}, true)
 	talk_left.resize(ClassroomModel.COUNT)
 	talk_left.fill(0.0)
 	talk_word.resize(ClassroomModel.COUNT)
@@ -159,18 +162,20 @@ func _draw_teachers() -> void:
 func _draw_adult(feet: Vector2, look: Dictionary, arms: float, facing: int, mouth: float, swing: float) -> void:
 	var skin: Color = look["skin"]
 	var shirt: Color = look["shirt"]
-	var hip: Vector2 = feet + Vector2(0.0, -44.0)
-	var torso: Vector2 = hip + Vector2(0.0, -24.0)
-	var head: Vector2 = torso + Vector2(0.0, -42.0)
+	var w: float = look["w"]
+	var h: float = look["h"]
+	var hip: Vector2 = feet + Vector2(0.0, -44.0 * h)
+	var torso: Vector2 = hip + Vector2(0.0, -24.0 * h)
+	var head: Vector2 = torso + Vector2(0.0, -27.0 * h - 15.0)
 	draw_line(hip + Vector2(-6.0, 0.0), feet + Vector2(-9.0 + swing, 0.0), UI.INK, 5.0, true)
 	draw_line(hip + Vector2(6.0, 0.0), feet + Vector2(9.0 - swing, 0.0), UI.INK, 5.0, true)
 	for side: int in [-1, 1]:
-		var shoulder: Vector2 = torso + Vector2(float(side) * 15.0, -16.0)
+		var shoulder: Vector2 = torso + Vector2(float(side) * 15.0 * w, -16.0 * h)
 		var ang: float = lerpf(1.25, -1.15, arms)
 		var hand: Vector2 = shoulder + Vector2(float(side) * cos(ang), sin(ang)) * 36.0
 		draw_line(shoulder, hand, skin.darkened(0.15), 5.0, true)
 		draw_circle(hand, 4.5, skin)
-	UI.ellipse(self, torso, 18.0, 28.0, shirt, UI.INK, 2.0)
+	UI.ellipse(self, torso, 18.0 * w, 28.0 * h, shirt, UI.INK, 2.0)
 	_draw_head(head, 15.0, look, float(facing) * 3.0, mouth, 1.0 if arms > 0.5 else 0.0)
 
 
@@ -278,10 +283,29 @@ func _draw_head(c: Vector2, r: float, look: Dictionary, eye_shift: float, mouth:
 		cap.append(c + Vector2(r * 0.75, -r * 0.5))
 		cap.append(c + Vector2(-r * 0.75, -r * 0.5))
 		draw_colored_polygon(cap, hair)
+	if bool(look.get("beard", false)):
+		# Full beard: covers the jaw from ear to ear; the mouth is drawn on top of it.
+		var beard: PackedVector2Array = PackedVector2Array()
+		for k: int in range(13):
+			var ang4: float = -0.12 + (PI + 0.24) * float(k) / 12.0
+			beard.append(c + Vector2(cos(ang4) * r * 1.1, sin(ang4) * r * 1.22))
+		beard.append(c + Vector2(-r * 0.62, r * 0.22))
+		beard.append(c + Vector2(r * 0.62, r * 0.22))
+		draw_colored_polygon(beard, hair)
 	# Face.
 	var eye_r: float = 1.8 + 1.2 * surprise
 	draw_circle(c + Vector2(-r * 0.38 + eye_shift, -r * 0.05), eye_r, UI.INK)
 	draw_circle(c + Vector2(r * 0.38 + eye_shift, -r * 0.05), eye_r, UI.INK)
+	if bool(look.get("glasses", false)):
+		var left_lens: Vector2 = c + Vector2(-r * 0.38 + eye_shift, -r * 0.05)
+		var right_lens: Vector2 = c + Vector2(r * 0.38 + eye_shift, -r * 0.05)
+		draw_circle(left_lens, r * 0.3, Color(1, 1, 1, 0.3))
+		draw_circle(right_lens, r * 0.3, Color(1, 1, 1, 0.3))
+		draw_arc(left_lens, r * 0.3, 0.0, TAU, 16, UI.INK, 1.6, true)
+		draw_arc(right_lens, r * 0.3, 0.0, TAU, 16, UI.INK, 1.6, true)
+		draw_line(left_lens + Vector2(r * 0.3, 0.0), right_lens - Vector2(r * 0.3, 0.0), UI.INK, 1.6, true)
+		draw_line(left_lens - Vector2(r * 0.3, 0.0), c + Vector2(-r, -r * 0.15), UI.INK, 1.6, true)
+		draw_line(right_lens + Vector2(r * 0.3, 0.0), c + Vector2(r, -r * 0.15), UI.INK, 1.6, true)
 	var mp: Vector2 = c + Vector2(eye_shift * 0.6, r * 0.5)
 	if mouth > 0.05:
 		UI.ellipse(self, mp, r * 0.30, maxf(1.2, r * 0.42 * mouth), Color("5a1420"))
