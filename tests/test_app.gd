@@ -28,9 +28,14 @@ func _run() -> void:
 	finish(EXPECTED)
 
 
+## Waits n frames and at least n/60 s: headless frames are not tied to a display, so a frame
+## count alone can be almost no time at all (a "wait 30 frames" check failed once that way).
 func _frames(n: int) -> void:
-	for i: int in range(n):
+	var until: int = Time.get_ticks_msec() + int(float(n) * 1000.0 / 60.0)
+	var done: int = 0
+	while done < n or Time.get_ticks_msec() < until:
 		await process_frame
+		done += 1
 
 
 func _buttons(node: Node, out: Array[Button]) -> void:

@@ -142,7 +142,7 @@ func _draw_positive() -> void:
 		UI.arrow(self, start, Vector2(start.x, c.y), UI.POS, 5.0)
 	_draw_ball(Color("ffd166"))
 	if model.at_limit:
-		UI.text(self, Vector2(TRACK_X, _y(model.limit()) + (-16.0 if up else 28.0)), "No room left!", 15, UI.WARN, 0)
+		UI.text(self, Vector2(TRACK_X, _y(model.limit()) + (-16.0 if up else 36.0)), "No room left!", 15, UI.WARN, 0)
 	_draw_cue()
 
 
