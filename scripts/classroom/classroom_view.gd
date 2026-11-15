@@ -23,6 +23,12 @@ const HAIR_STYLES: int = 8
 const TEACHER_X: float = 58.0
 const FLOOR_Y: float = 152.0
 const DOOR_X: float = 640.0
+const STUDENT_SHIRT: Color = Color("1f2f5c")
+## At most this many students wear a head covering; any others the seed produces get one of the
+## replacement hair styles instead.
+const MAX_HEAD_COVERINGS: int = 1
+const KEEP_COVERING_FROM: int = 1
+const REPLACEMENT_STYLES: Array[int] = [6, 0, 3, 4]
 const TEACHER2_HAIR: Color = Color("3fd6b4")
 const VOICE_COLORS: Array[Color] = [Color("ffd166"), Color("ef8354"), Color("06d6a0"), Color("9bd1ff")]
 
@@ -70,6 +76,17 @@ func generate_looks(rng_seed: int) -> void:
 	_looks.clear()
 	for i: int in range(ClassroomModel.COUNT):
 		_looks.append(_random_look(rng))
+	# Uniform shirts. A head covering keeps the colour the seed gave that student.
+	var coverings: int = 0
+	var replaced: int = 0
+	for look: Dictionary in _looks:
+		look["scarf"] = look["shirt"]
+		look["shirt"] = STUDENT_SHIRT
+		if int(look["style"]) == 7:
+			coverings += 1
+			if coverings <= KEEP_COVERING_FROM or coverings > KEEP_COVERING_FROM + MAX_HEAD_COVERINGS:
+				look["style"] = REPLACEMENT_STYLES[replaced % REPLACEMENT_STYLES.size()]
+				replaced += 1
 	# The two teachers are fixed characters (owner's brief); only their shirts come from the seed.
 	_teacher_look = _random_look(rng)
 	_teacher2_look = _random_look(rng)
@@ -242,13 +259,15 @@ func _draw_head(c: Vector2, r: float, look: Dictionary, eye_shift: float, mouth:
 	var skin: Color = look["skin"]
 	var hair: Color = look["hair"]
 	var style: int = look["style"]
-	var cloth: Color = look["shirt"]
+	var cloth: Color = look.get("scarf", look["shirt"])
 	# Hair that sits behind the head.
 	match style:
 		1:
 			draw_circle(c + Vector2(0.0, -3.0), r * 1.45, hair)
 		2:
-			UI.round_rect(self, Rect2(c.x - r * 1.15, c.y - r * 0.9, r * 2.3, r * 2.4), hair, Color(0, 0, 0, 0), 0, 6)
+			# Long hair: two locks falling past the shoulders, open under the chin.
+			UI.round_rect(self, Rect2(c.x - r * 1.2, c.y - r * 0.9, r * 0.75, r * 2.5), hair, Color(0, 0, 0, 0), 0, 5)
+			UI.round_rect(self, Rect2(c.x + r * 0.45, c.y - r * 0.9, r * 0.75, r * 2.5), hair, Color(0, 0, 0, 0), 0, 5)
 		3:
 			UI.ellipse(self, c + Vector2(r * 1.2, r * 0.2), r * 0.45, r * 0.9, hair)
 		5:

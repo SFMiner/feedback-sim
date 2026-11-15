@@ -24,7 +24,7 @@ reading the results from a graph that replays in step with the animation.
 - [ ] Layout that reflows for phones or very short frames (not built: the 1180 x 500 layout scales down as a whole)
 
 ### 1. Watch: Classroom Chatter
-- [x] 15 procedurally drawn students with varied skin tones (12), hair colours and styles (8), clothes and proportions; looks are generated separately from behaviour
+- [x] 15 procedurally drawn students with varied skin tones (12), hair colours and styles (8) and proportions, in navy uniform shirts; two fixed teacher characters; looks are generated separately from behaviour
 - [x] Activity spreads between neighbouring students; head, mouth and arm movement follow each student's activity
 - [x] Teacher answers at the threshold with three WHOMP! notes; the noise falls in three steps to zero
 - [x] After three cycles a second teacher arrives, the teacher is distracted, and the noise climbs to its ceiling
