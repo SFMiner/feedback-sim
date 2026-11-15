@@ -87,11 +87,12 @@ func generate_looks(rng_seed: int) -> void:
 			if coverings <= KEEP_COVERING_FROM or coverings > KEEP_COVERING_FROM + MAX_HEAD_COVERINGS:
 				look["style"] = REPLACEMENT_STYLES[replaced % REPLACEMENT_STYLES.size()]
 				replaced += 1
-	# The two teachers are fixed characters (owner's brief); only their shirts come from the seed.
+	# The two teachers are fixed characters (owner's brief); the first teacher's shirt and skin tone come from the seed.
 	_teacher_look = _random_look(rng)
 	_teacher2_look = _random_look(rng)
-	_teacher_look.merge({"hair": Color("15110f"), "style": 0, "w": 0.72, "h": 1.06, "glasses": true}, true)
-	_teacher2_look.merge({"skin": Color("f4d7bd"), "hair": TEACHER2_HAIR, "style": 0, "w": 1.5, "h": 0.93,
+	_teacher_look.merge({"hair": Color("15110f"), "style": 0, "w": 0.58, "h": 1.06, "glasses": true}, true)
+	_teacher2_look.merge({"skin": Color("f4d7bd"), "hair": TEACHER2_HAIR, "style": 0, "w": 1.16, "h": 0.93,
+		"shirt": Color("8b9199"),
 		"glasses": true, "beard": true}, true)
 	talk_left.resize(ClassroomModel.COUNT)
 	talk_left.fill(0.0)
