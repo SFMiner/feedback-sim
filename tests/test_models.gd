@@ -2,7 +2,7 @@ extends "res://tests/test_base.gd"
 ## Headless checks of the four simulation models (no scenes, no rendering).
 ## Run:  Godot --headless --path . --script tests/test_models.gd
 
-const EXPECTED: int = 47
+const EXPECTED: int = 58
 
 
 func _init() -> void:

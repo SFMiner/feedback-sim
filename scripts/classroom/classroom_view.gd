@@ -136,7 +136,7 @@ func _draw_teachers() -> void:
 		var mouth2: float = 0.5 * absf(sin(anim_t * 4.3 + 1.0)) if model.teacher_distracted else 0.0
 		_draw_adult(Vector2(x, FLOOR_Y + 22.0), _teacher2_look, 0.0, -1, mouth2, swing)
 		if model.teacher_distracted:
-			var bubble: Vector2 = Vector2(TEACHER_X + 39.0, 28.0)
+			var bubble: Vector2 = Vector2(TEACHER_X + 39.0, 42.0)
 			UI.round_rect(self, Rect2(bubble.x - 34.0, bubble.y - 15.0, 68.0, 26.0), Color.WHITE, UI.INK, 2, 10)
 			UI.text(self, Vector2(bubble.x, bubble.y + 4.0), "psst...", 14, UI.INK, 0)
 	# Teacher's ear: a marker that shows whether the corrective response is switched on.

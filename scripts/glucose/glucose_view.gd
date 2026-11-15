@@ -8,7 +8,7 @@ extends Control
 ## procedural organs and particles when present.
 
 # === CONSTANTS ===
-const DESIGN: Vector2 = Vector2(560.0, 352.0)
+const DESIGN: Vector2 = Vector2(560.0, 368.0)
 const VESSEL: Rect2 = Rect2(76.0, 150.0, 476.0, 62.0)
 const PANCREAS: Rect2 = Rect2(92.0, 34.0, 168.0, 72.0)
 const LIVER: Rect2 = Rect2(362.0, 24.0, 186.0, 92.0)
@@ -47,7 +47,7 @@ func _draw() -> void:
 	_draw_organs(frame)
 	# Bloodstream.
 	UI.round_rect(self, VESSEL, C_BLOOD, C_BLOOD_EDGE, 3, 20)
-	UI.text(self, Vector2(VESSEL.position.x + 14.0, VESSEL.position.y + 16.0), "Bloodstream", 13, Color("7a2a33"))
+	UI.text(self, Vector2(VESSEL.get_center().x - 20.0, VESSEL.end.y + 16.0), "Bloodstream", 13, Color("7a2a33"), 0)
 	var drift: float = 0.0 if reduced else t * 13.0
 	_blood_particles(int(round(glucose * 0.42)), 0, drift)
 	_blood_particles(int(round(insulin * 12.0)), 1, drift)
@@ -158,7 +158,7 @@ func _draw_meter(glucose: float) -> void:
 
 
 func _draw_legend() -> void:
-	var y: float = DESIGN.y - 9.0
+	var y: float = DESIGN.y - 8.0
 	_particle(Vector2(150.0, y - 4.0), 0, 1.0)
 	UI.text(self, Vector2(160.0, y), "glucose", 12, UI.INK)
 	_particle(Vector2(232.0, y - 4.0), 1, 1.0)

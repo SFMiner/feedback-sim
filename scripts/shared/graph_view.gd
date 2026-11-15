@@ -152,7 +152,7 @@ func _draw() -> void:
 
 # === PUBLIC METHODS ===
 func plot_rect() -> Rect2:
-	var top: float = 26.0 + (36.0 if show_event_labels else 0.0)
+	var top: float = 28.0 + (40.0 if show_event_labels else 0.0)
 	return Rect2(44.0, top, maxf(size.x - 56.0, 10.0), maxf(size.y - top - 34.0, 10.0))
 
 
@@ -243,6 +243,6 @@ func _draw_events(plot: Rect2, x_max: float, t_now: float) -> void:
 		var lx: float = clampf(x - w * 0.5, plot.position.x, plot.end.x - w)
 		for row: int in range(3):
 			if lx > row_end[row] + 6.0:
-				UI.text(self, Vector2(lx, plot.position.y - 10.0 - 12.0 * float(2 - row) + 0.0), label, 11, c)
+				UI.text(self, Vector2(lx, plot.position.y - 10.0 - 12.0 * float(row)), label, 11, c)
 				row_end[row] = lx + w
 				break

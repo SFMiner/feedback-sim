@@ -24,6 +24,8 @@ var volume_step: int = 4
 var muted: bool = false
 ## Name -> number of times played since start. Read by tests.
 var play_counts: Dictionary = {}
+## Bursts asked for per student voice, including ones dropped because every player was busy.
+var chatter_requests: PackedInt32Array = PackedInt32Array([0, 0, 0, 0])
 
 # === PRIVATE VARIABLES ===
 var _streams: Dictionary = {}
@@ -58,6 +60,7 @@ func _ready() -> void:
 ## Plays one burst of student voice `voice` (0-3). Returns its length in seconds, or 0.0 when every
 ## chatter player is busy (the cap that keeps a loud classroom from distorting).
 func chatter(voice: int, gain: float, pitch: float, variant: int) -> float:
+	chatter_requests[voice] += 1
 	var busy: int = 0
 	var free_player: AudioStreamPlayer = null
 	for p: AudioStreamPlayer in _chatter:

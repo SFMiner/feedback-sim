@@ -87,7 +87,7 @@ func _exp_build_view() -> Control:
 func _exp_configure_graph() -> void:
 	graph.title = "Attached Platelets"
 	graph.y_label = "Platelets in the plug"
-	graph.y_max = 45.0
+	graph.y_max = 48.0
 	graph.x_span_min = 20.0
 	graph.add_series("attached", "Attached", Color("c9a2ff"))
 

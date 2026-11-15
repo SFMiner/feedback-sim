@@ -81,7 +81,9 @@ func _ready() -> void:
 	_view_frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_view_frame.size_flags_stretch_ratio = 1.35
 	row.add_child(_view_frame)
-	_view_frame.add_child(_exp_build_view())
+	var scene: Control = _exp_build_view()
+	scene.clip_contents = true
+	_view_frame.add_child(scene)
 	# Right: graph and the text panel (hints, then reflection prompts).
 	var side: VBoxContainer = VBoxContainer.new()
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL

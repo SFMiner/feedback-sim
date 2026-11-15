@@ -150,7 +150,7 @@ func _draw_cue() -> void:
 	if cue_age > 0.7:
 		return
 	var k: float = cue_age / 0.7
-	var c: Vector2 = Vector2(TRACK_X - 98.0, _y(model.value) + 6.0)
+	var c: Vector2 = Vector2(TRACK_X - 104.0, _y(model.value) + 34.0)
 	if model.mode == AbstractModel.MODE_NEGATIVE:
 		c = Vector2(TRACK_X + 92.0, _y(88.0) if cue_dir == -1 else _y(10.0))
 	var fsize: int = 24 if reduced else int(20.0 + 10.0 * (1.0 - k))

@@ -29,13 +29,13 @@ const BASAL_USE: float = 0.20
 const INSULIN_USE: float = 0.50
 const EXERCISE_USE: float = 0.80
 const EXERCISE_LENGTH: float = 40.0
-const STORE_RATE: float = 0.60
-const LIVER_BASAL_OUT: float = 0.10
+const STORE_RATE: float = 1.10
+const LIVER_BASAL_OUT: float = 0.02
 const LIVER_GLUCAGON_OUT: float = 0.90
 const NEW_GLUCOSE: float = 0.06
 const GLYCOGEN_PER_GLUCOSE: float = 0.45
-const DIGESTION_TRICKLE: float = 0.165
-const MEAL_TOTAL: float = 62.0
+const DIGESTION_TRICKLE: float = 0.34
+const MEAL_TOTAL: float = 50.0
 const MEAL_LENGTH: float = 45.0
 const REDUCED_RESPONSE: float = 0.3
 
@@ -146,7 +146,7 @@ func _insulin_target(g: float) -> float:
 
 
 func _glucagon_target(g: float) -> float:
-	return glucagon_response / (1.0 + exp(-(45.0 - g) / 6.0))
+	return glucagon_response / (1.0 + exp(-(42.0 - g) / 6.0))
 
 
 func _glycogen_release() -> float:
