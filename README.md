@@ -104,6 +104,11 @@ node tests\web\axe_check.js                                     # axe-core on th
 
 `$env:QUICK = "1"` shortens the 60-second no-input wait to 6 seconds.
 
+**GitHub Pages.** The game is also served at https://sfminer.github.io/feedback-sim/ from the `gh-pages` branch,
+which holds only the contents of the export folder plus an empty `.nojekyll`. To update it after a new export, copy
+the export into a clean checkout of `gh-pages`, commit and push; Pages rebuilds by itself. The branch is not updated
+automatically when `main` changes.
+
 **Export notes**
 
 - **Template.** Godot's standard 4.7.2 `web_nothreads_release` template (wasm 39.5 MB). The lean templates in
