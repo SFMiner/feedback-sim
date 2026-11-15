@@ -205,8 +205,11 @@ Each model has a comment at the top of its file stating its rules in plain words
 - **Description:** Watch and test how positive and negative feedback work, from a noisy classroom to blood clotting and blood glucose.
 - **Estimated minutes:** 12 to 20 (not timed with students).
 - **Class settings:** `module`, a choice: `classroom`, `abstract`, `clotting`, `glucose`; absent or unknown = main menu.
-- **Export:** `..\exports\feedback-sim\`. Not imported, not published.
-- **Owner-only (left blank):** level, author, license.
+- **Export:** `..\exports\feedback-sim\`.
+- **On the site:** imported and published by the game-sim-server session on 2026-11-14 (its report): page
+  `https://sims.mr-miner.com/games/feedback`, play `/play/feedback`, package `/g/feedback-sim/`, release `20261115T015443`,
+  built from commit `0ff2ad2`. The site does not offer the `module` setting; the game still reads it if present.
+- **Owner-only fields, set by Sean in that session:** Grade 8, author Sean Miner, license MIT.
 
 | Accessibility item | State | How it was checked |
 | --- | --- | --- |
