@@ -1,0 +1,9 @@
+# Godot 4
+.godot/
+*.translation
+
+# Build output and stray binaries do not belong in the repository
+/build/
+*.exe
+*.zip
+*.tmp
