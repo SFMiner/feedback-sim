@@ -120,7 +120,8 @@ Put a PNG or SVG with a known name in `assets/bio/` (`platelet`, `platelet_activ
 `liver`, `muscle`, `glucose`, `insulin`, `glucagon`); sizes are listed in `assets/bio/README.md`. `scripts/shared/art.gd`
 looks the file up and the view draws it in place of the procedural shape. Models never touch artwork. The blood
 vessel, wound, fibrin mesh and food are drawn in code only; to restyle them edit `clotting_view.gd` / `glucose_view.gd`.
-The lookup has not been exercised with real artwork yet (there is none to test with).
+The lookup was checked on desktop with two temporary PNGs (`platelet`, `pancreas`), which appeared in place of the
+placeholders and were then removed. It has not been checked in a web export, or with SVG files.
 
 ## How it is put together
 
